@@ -15,9 +15,9 @@ app.use(
 
 // get request to route url 
 
-app.get('/',(request, response =>{
+app.get('/',(request, response) => {
 response.json({Welcome: 'How to create an API with Node.js, express and POSTGRES'})
-}) )
+})
 
 // Specify the port the express app is to run on
 
