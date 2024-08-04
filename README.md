@@ -7,8 +7,8 @@ This project is a Node.js application that includes various functionalities. It 
 
 ## Project Structure
 
-- **`node_modules/`**: Contains all the npm packages used in the project.
-- **`.gitignore`**: Lists files and directories that should be ignored by Git.
+- **`node_modules/`**: Contains all the npm packages used in the project. This directory is excluded from version control using `.gitignore`.
+- **`.gitignore`**: Specifies files and directories to be ignored by Git. It currently excludes `node_modules/` to prevent it from being pushed to the remote repository.
 - **`index.js`**: The main entry point of the application. Contains core logic and endpoint configurations.
 - **`package-lock.json`**: Locks the versions of the npm packages to ensure consistency across installations.
 - **`package.json`**: Contains metadata about the project and lists its dependencies.
@@ -55,3 +55,8 @@ Include license information here (if applicable).
 ## Contact
 
 For any questions or issues, please contact [your email address].
+
+## Notes
+
+- **Excluding `node_modules`**: The `node_modules/` directory is excluded from version control using `.gitignore` to keep the repository clean and avoid committing unnecessary files.
+- **.gitignore Configuration**: Ensure your `.gitignore` file is correctly set up to prevent any unwanted files or directories from being tracked by Git.
