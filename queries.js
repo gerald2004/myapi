@@ -2,7 +2,7 @@ const { response } = require('express')
 
 const Pool = require('pg').Pool
 const pool = new Pool({
-    user: 'blueline',
+    user: 'bluelime',
     host: 'localhost',
     database: 'api',
     password: 'gratitude',
@@ -34,22 +34,35 @@ const pool = new Pool({
 
  // Route to query to create a country 
 
- const createCountry = (request,response) => {
-    const { name, capital} = request.body
-    pool.query('INSERT INTO countries(name, capital) VALUES ($1,$2)', [name,capital], (error,results) => {
+//  const createCountry = (request,response) => {
+//     const { name, city} = request.body
+//     pool.query('INSERT INTO countries(name, city) VALUES ($1,$2)', [name,city], (error,results) => {
+//         if (error) {
+//             throw error
+//         }
+//         response.status(201).send('A new country has been added to the database');
+//     })
+//  }
+ 
+const createCountry = (request, response) => {
+    const { name, city } = request.body;
+    console.log('Received request to create country:', name, city);
+    pool.query('INSERT INTO countries (name, city) VALUES ($1, $2)', [name, city], (error, results) => {
         if (error) {
-            throw error
+            console.error('Error executing query:', error);
+            response.status(500).send('Error executing query');
+            return;
         }
         response.status(201).send('A new country has been added to the database');
-    })
- }
- 
+    });
+};
+
  // Creating a route function to update a record existing in the database
 
  const updateCountry = (request, response) => {
     const id = parseInt(request.params.id)
-    const { name , capital} = request.body
-    pool.query('UPDATE countries SET name = $1, capita = $2, WHERE id = $3',[name, capital, id], 
+    const { name , city} = request.body
+    pool.query('UPDATE countries SET name = $1, city = $2 WHERE id = $3',[name, city, id], 
         (error,results) => {
             if (error) {
                 throw error
@@ -63,12 +76,24 @@ const pool = new Pool({
  // Creating a query function to delete an existing record in the database
 
  const deleteCountry = (request, response) => {
-    const id = parseInt(request.params.id)
-    pool.query('DELETE FROM countries WHERE id = $id', [id], (error,results) => {
+    const id = parseInt(request.params.id);
+    pool.query('DELETE FROM countries WHERE id = $1', [id], (error, results) => {
         if (error) {
-            throw error
+            console.error('Error executing query:', error);
+            response.status(500).send('Error executing query');
+            return;
         }
+        response.status(200).send(`Country deleted with ID: ${id}`);
+    });
+};
 
-        response.status(200).send(`Country deleted with ID: ${id}`)
-    })
+
+ // creating exports to be available to the application file using modules
+
+ module.exports = {
+    getCountries,
+    getCountryById,
+    createCountry,
+    updateCountry,
+    deleteCountry
  }
